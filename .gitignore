@@ -1,4 +1,7 @@
-Library/*
+/Library
+/.vs
+/obj
+/Logs
 Library/Artifacts/05/05f3116237aac09020d0d4a1b5eb5182
 Library/Artifacts/06/06b26572d09b2dbf63f1700f89b088e7
 Library/Artifacts/0a/0a6224b33d2e07b7683a067561be24b1
