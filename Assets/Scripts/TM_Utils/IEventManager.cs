@@ -25,7 +25,6 @@ public class IEventManager : MonoBehaviour {
 
     public Dictionary<string, IListener> iListeners;
     private static IEventManager eventManagerParms;
-	//private static IEventManager instance = null;
 
 	public static IEventManager Instance {
 		get 

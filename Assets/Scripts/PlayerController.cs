@@ -9,9 +9,13 @@ public class PlayerController : MonoBehaviour, IListener
     MaterialPropertyBlock _propBlock;
 
     public TextMesh textMesh;
+    public GameObject floor;
 
-    public Vector3 force;
-    public float speed;
+    public Vector3  force;
+    public Vector3  gravityVector = new Vector3(0.0f, -1.0f, 0.0f);
+    private Vector3 startPosition = new Vector3(0.0f, 5.0f, 0.0f);
+    public float    speed;
+    public float    mass = 1.5f;
 
     float localScale = 1.0f;
 
@@ -38,8 +42,9 @@ public class PlayerController : MonoBehaviour, IListener
         switch (name)
         {
             case "Player::Reset":
-                score = 0;
+                score = 0; ;
                 lives = 3;
+                transform.position = startPosition;
                 break;
         }
     }
@@ -48,6 +53,7 @@ public class PlayerController : MonoBehaviour, IListener
     void Start()
     {
         physicsSystem = GetComponent<PhysicsSystem>();
+        physicsSystem.Init(9.8f, mass);
 
         localScale = transform.localScale.x;
 
@@ -67,8 +73,10 @@ public class PlayerController : MonoBehaviour, IListener
         force.z = Input.GetAxis("Vertical") * speed;
         force.x = Input.GetAxis("Horizontal") * speed;
 
-        physicsSystem.AddForce(force, Time.deltaTime);
-        physicsSystem.UpdatePhysics(1.0f);
+        physicsSystem.AddForce(force);
+        //physicsSystem.AddForce(gravityVector*(mass*gravity);
+
+        physicsSystem.UpdatePhysics(1.0f, floor, transform.gameObject);
 
         transform.position = physicsSystem.GetPosition();
     }

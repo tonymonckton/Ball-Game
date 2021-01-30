@@ -16,8 +16,27 @@ public class PhysicsSystem : MonoBehaviour
     public float maxSpeed       = 0.5f;
     public float maxAcceleration = 0.2f;
 
-    public void UpdatePhysics(float deltaTime)
+    public float earthGravity   = 9.8f;
+    public float marsGravity    = 3.7f;
+    public float moonGravity    = 1.6f;
+
+    Vector3 RayPosition     = Vector3.zero;
+    Vector3 RayDirection    = new Vector3(0.0f, -1.0f, 0.0f);
+    Vector3 hitPoint        = Vector3.zero;
+
+    public void Init(float _gravity, float _mass)
+    {   
+        gravity      = _gravity;
+        mass         = _mass;
+        velocity     = Vector3.zero;
+        acceleration = Vector3.zero;
+    }
+
+
+    public void UpdatePhysics(float deltaTime, GameObject floor, GameObject player)
     {
+        velocity += acceleration;
+
         frictionVector = -velocity * friction;
         if (frictionVector.magnitude >= velocity.magnitude)
             frictionVector = frictionVector.normalized * velocity.magnitude;
@@ -26,9 +45,17 @@ public class PhysicsSystem : MonoBehaviour
         location += velocity;
 
         if (velocity.magnitude > maxSpeed)
-        {
             velocity = velocity.normalized * maxSpeed;
+
+        if (floor != null)
+        {
+            RayPosition = player.transform.position;
+            RayPosition.y += 5.0f;
+            hitPoint = Intersect(floor.transform.position, floor.transform.up, RayPosition, RayDirection);
+
         }
+
+        acceleration = Vector3.zero;
     }
 
     // Newton's 2nd Law of Physics
@@ -37,17 +64,18 @@ public class PhysicsSystem : MonoBehaviour
     //
     //  weight  = mass * gravity
     //  gravity: earth 9.7, Mars 3.7, Moon 1.6
-    public void AddForce(Vector3 force, float deltaTime)
+
+    public void AddForce(Vector3 force)
     {
         // not using gravity at the moment, gravitational force = mass*gravity 
-        // acceleration += (force/(gravity*mass)) * deltaTime; 
-        acceleration += force;
+        // acceleration += (force/mass) * deltaTime;
+
+        acceleration += force/mass;
         if (acceleration.magnitude > maxAcceleration)
             acceleration = acceleration.normalized * maxAcceleration;
 
-        velocity += acceleration;
-        acceleration = Vector3.zero;
     }
+
 
     public Vector3 GetPosition()
     {

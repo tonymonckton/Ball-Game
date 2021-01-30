@@ -1127,7 +1127,7 @@ GameObject:
   - component: {fileID: 992114448}
   - component: {fileID: 992114447}
   m_Layer: 0
-  m_Name: floor triggers
+  m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1244,8 +1244,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textMesh: {fileID: 792073491}
+  floor: {fileID: 992114446}
   force: {x: 0, y: 0, z: 0}
+  gravityVector: {x: 0, y: -1, z: 0}
   speed: 0.13
+  mass: 1.5
   score: 0
   lives: 3
 --- !u!23 &1720618933
@@ -1303,7 +1306,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1720618931}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 792073493}
@@ -1331,6 +1334,9 @@ MonoBehaviour:
   frictionVector: {x: 0, y: 0, z: 0}
   maxSpeed: 0.3
   maxAcceleration: 0.2
+  earthGravity: 9.8
+  marsGravity: 3.7
+  moonGravity: 1.6
 --- !u!1 &1847018094
 GameObject:
   m_ObjectHideFlags: 0
